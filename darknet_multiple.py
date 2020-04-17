@@ -305,7 +305,7 @@ netMain = None
 metaMain = None
 altNames = None
 
-def performDetect(imagePath="karam.jpg", thresh= 0.25, configPath = "./cfgk/yolov3.cfg", weightPath = "./backup/yolov3_6000.weights", metaPath= "./cfgk/obj.data", showImage= True, makeImageOnly = False, initOnly= False):
+def performDetect(imagePath="karam.jpg", thresh= 0.25, configPath = "./cfgk/yolov3.cfg", weightPath = "./backup/yolov3_6000.weights", metaPath= "./cfgk/obj.data", showImage= True, makeImageOnly = True, initOnly= False):
     """
     Convenience function to handle the detection and returns of objects.
 
@@ -462,7 +462,7 @@ def performDetect(imagePath="karam.jpg", thresh= 0.25, configPath = "./cfgk/yolo
                 "caption": "\n<br/>".join(imcaption)
             }
 
-            print(detections)
+            #print(detections)
         except Exception as e:
             print("Unable to show image: "+str(e))
     return final_detections

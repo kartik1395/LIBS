@@ -13,7 +13,7 @@ def getLabel(tempFilepath, languages='eng'):
     img = tempFilepath
     text = pytesseract.image_to_string(img, lang=languages, config='--psm 6')
     final_text = ''
-    print("PT", text)
+    #print("PT", text)
     text = text.split('\n')
     for i in range(len(text)):
     	final_text = final_text + text[i]
@@ -32,7 +32,7 @@ def getShelf(tempFilepath, languages='eng'):
 
 	img = tempFilepath
 	text = pytesseract.image_to_string(img, lang=languages ,config='--psm 8')
-	print("pytext",text)
+	#print("pytext",text)
 	final_text =''
 	#text = text.split('')
 	# for i in range(len(text)):
@@ -41,11 +41,11 @@ def getShelf(tempFilepath, languages='eng'):
 
 	ff = [char for char in text if char.isupper()]  # .join('')
 	final_text = ''
-	print("ff",ff)
+	#print("ff",ff)
 	
 	for i in range(0, len(ff)):
 		final_text = final_text + ff[i]
-	print(final_text)
+	#print(final_text)
 	
 	final_text = final_text[0:3] + '-' + final_text[3:6]
 	print ("text :{0}".format(final_text))
@@ -81,7 +81,7 @@ def getText(pil_image, target):
 		ret, thresh4 = cv2.threshold(img, 120, 255, cv2.THRESH_TOZERO) 
 		ret, thresh5 = cv2.threshold(img, 120, 255, cv2.THRESH_TOZERO_INV) 
 
-		th3 = cv2.adaptiveThreshold(thresh1,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
+		gaussian = cv2.adaptiveThreshold(thresh1,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
             cv2.THRESH_BINARY,11,2)
 
 
@@ -103,15 +103,15 @@ def getText(pil_image, target):
 			
 			if cv2.waitKey(0) & 0xff == 27:  
 				cv2.destroyAllWindows()  
-		else: 
+		else: 	
 			kernel = np.ones((3,3), np.uint8)
 			dilate = cv2.dilate(thresh1, kernel)
-			erode = cv2.erode(thresh3, np.ones((2,2), np.uint8))
-			final_text = getLabel(dilate)
-			#cv2.imshow('Truncated Threshold', thresh3)
-			#cv2.imshow('Eroded', erode)
-			if cv2.waitKey(0) & 0xff == 27:  
-				cv2.destroyAllWindows() 
+			final_text = getLabel(gaussian)
+			
+			# cv2.imshow('Binary Thresholding', gaussian)
+			# #cv2.imshow('Eroded', erode)
+			# if cv2.waitKey(0) & 0xff == 27:  
+			# 	cv2.destroyAllWindows() 
 			
 
 		  
@@ -130,13 +130,13 @@ def getText(pil_image, target):
 		 
 		# if cv2.waitKey(0) & 0xff == 27:  
 		# 	cv2.destroyAllWindows()  
-		print("EXtract", final_text)
+		#print("EXtract", final_text)
 		return final_text
 
 if __name__ == "__main__":
-	for file in os.listdir('shelf/'):
+	for file in os.listdir('roi/'):
 		#image= Image.open('shelf/shelf' + str(i) + '.jpg')
-		image = Image.open('shelf/' + file)
+		image = Image.open('roi/' + file)
 		print(file)
 	#image = cv2.imread("./test1.jpg")
-		getText(image,'shelf')
+		getText(image,'label')
