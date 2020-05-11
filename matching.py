@@ -63,7 +63,7 @@ def extractLabels(result, document):
                     # crop the image for book label
                     roi_label = img.crop((lx1, ly1, lx2, ly2))
                     # crop the image for shelf label
-                    roi_shelf = img.crop((sx1, sy1, sx2, sy2))
+                    roi_shelf = img.crop((sx1 -100 ,sy1, sx2, sy2))
                     # roi_label.save('test'+str(k)+'.jpg')
                     # k+=1
                     # text, _ = OCR(roi_label)
@@ -156,7 +156,7 @@ def createReport(text_label, shelf_label, df, img_name, document):
 
     p = document.add_paragraph('\n')
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p.add_run().add_picture(img_name, width = Inches(2))
+    p.add_run().add_picture(img_name, width = Inches(6))
 
     
 
